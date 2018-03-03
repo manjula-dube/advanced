@@ -63,6 +63,7 @@ class LoginPage extends React.Component {
             [AUTH_TOKEN]: token
           });
         this.props.history.replace("/");
+        window.location.reload()
       })
       .catch(err => {
         console.log("error");

@@ -96,7 +96,7 @@ class SuperContainer extends React.Component {
 			  >
 				Feed
 			  </NavLink>
-			  {this.state.token &&
+			  {this.props.data && this.props.data.me && this.props.data.me.email && this.state.token &&
 				<NavLink
 				  className="link dim f6 f5-ns dib mr3 black"
 				  activeClassName="gray"
@@ -128,7 +128,7 @@ class SuperContainer extends React.Component {
 				  Login
 				</Link>
 			  )}
-			  {this.state.token && (
+			  {this.props.data && this.props.data.me && this.props.data.me.email && this.state.token && (
 				<Link
 				  to="/create"
 				  className="f6 link dim br1 ba ph3 pv2 fr mb2 dib black"
@@ -184,6 +184,6 @@ query me {
   }
 }`
 
-export default SuperContainer
+export default graphql(ME,{})(SuperContainer)
 
 
