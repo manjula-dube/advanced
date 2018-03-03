@@ -65,18 +65,16 @@ class SignupPage extends React.Component {
         email,
         password
       }
-    })
+    });
 
     const token = result.data.signup.token;
     localStorage.setItem(AUTH_TOKEN, token);
 
-
     this.props.refreshTokenFn &&
       this.props.refreshTokenFn({
         [AUTH_TOKEN]: token
-      })
-     this.props.history.replace("/")
-
+      });
+    this.props.history.replace("/");
   };
 }
 

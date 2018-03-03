@@ -1,14 +1,14 @@
-import React from 'react'
-import { withRouter } from 'react-router-dom'
-import { graphql } from 'react-apollo'
-import gql from 'graphql-tag'
-import { AUTH_TOKEN } from '../constant'
+import React from "react";
+import { withRouter } from "react-router-dom";
+import { graphql } from "react-apollo";
+import gql from "graphql-tag";
+import { AUTH_TOKEN } from "../constant";
 
 class LoginPage extends React.Component {
   state = {
-    email: '',
-    password: ''
-  }
+    email: "",
+    password: ""
+  };
 
   render() {
     return (
@@ -34,42 +34,40 @@ class LoginPage extends React.Component {
             value={this.state.password}
           />
           {this.state.email &&
-            this.state.password && (
-              <button
-                className="pa3 bg-black-10 bn dim ttu pointer"
-                onClick={this._login}
-              >
-                Log in
-              </button>
-            )}
+            this.state.password &&
+            <button
+              className="pa3 bg-black-10 bn dim ttu pointer"
+              onClick={this._login}
+            >
+              Log in
+            </button>}
         </div>
       </div>
-    )
+    );
   }
 
   _login = async e => {
-    const { email, password } = this.state
-    this.props.loginMutation({
+    const { email, password } = this.state;
+    this.props
+      .loginMutation({
         variables: {
           email,
-          password,
-        },
+          password
+        }
       })
       .then(result => {
-        const token = result.data.login.token
-
+        const token = result.data.login.token;
 
         this.props.refreshTokenFn &&
           this.props.refreshTokenFn({
-            [AUTH_TOKEN]: token,
-          })
+            [AUTH_TOKEN]: token
+          });
+        this.props.history.replace("/");
       })
-
-      this.props.history.replace('/')
       .catch(err => {
-        console.log('error')
-      })
-  }
+        console.log("error");
+      });
+  };
 }
 
 const LOGIN_USER = gql`
@@ -83,6 +81,8 @@ const LOGIN_USER = gql`
       }
     }
   }
-`
+`;
 
-export default graphql(LOGIN_USER, { name: 'loginMutation' })(withRouter(LoginPage))
+export default graphql(LOGIN_USER, { name: "loginMutation" })(
+  withRouter(LoginPage)
+);
