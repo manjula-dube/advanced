@@ -7,8 +7,7 @@ import { AUTH_TOKEN } from '../constant'
 class LoginPage extends React.Component {
   state = {
     email: '',
-    password: '',
-    name: '',
+    password: ''
   }
 
   render() {
@@ -48,25 +47,25 @@ class LoginPage extends React.Component {
     )
   }
 
-  _login = () => {
+  _login = async e => {
     const { email, password } = this.state
-    this.props
-      .loginMutation({
+    this.props.loginMutation({
         variables: {
-          email: email,
-          password: password,
+          email,
+          password,
         },
       })
       .then(result => {
         const token = result.data.login.token
 
+
         this.props.refreshTokenFn &&
           this.props.refreshTokenFn({
             [AUTH_TOKEN]: token,
           })
-
-        this.props.history.replace('/')
       })
+
+      this.props.history.replace('/')
       .catch(err => {
         console.log('error')
       })

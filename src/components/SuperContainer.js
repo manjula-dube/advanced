@@ -34,13 +34,12 @@ class SuperContainer extends React.Component {
     this.refreshTokenFn = this.refreshTokenFn.bind(this)
 
     this.state = {
-      token: props.token,
-      expireToken: false,
+      token: props.token
     }
   }
 
   refreshTokenFn(data = {}) {
-    const { token } = data
+    const token  = data.AUTH_TOKEN
 
     if(token) {
       localStorage.setItem(AUTH_TOKEN, token)
@@ -59,10 +58,10 @@ class SuperContainer extends React.Component {
       if (token !== null && token !== undefined) {
         const expired = isTokenExpired(token)
         if (!expired) {
-          this.setState({ token: token, expireToken: expired })
+          this.setState({ token: token})
         } else {
           localStorage.removeItem(AUTH_TOKEN)
-          this.setState({ token: null, expireToken: false })
+          this.setState({ token: null})
         }
       }
     } catch(e) {
@@ -76,6 +75,7 @@ class SuperContainer extends React.Component {
   }
 
   render() {
+
     return (
         <Router>
           <React.Fragment>
@@ -96,7 +96,7 @@ class SuperContainer extends React.Component {
               >
                 Feed
               </NavLink>
-              {this.state.token && (
+              {this.state.token &&
                 <NavLink
                   className="link dim f6 f5-ns dib mr3 black"
                   activeClassName="gray"
@@ -106,7 +106,7 @@ class SuperContainer extends React.Component {
                 >
                   Drafts
                 </NavLink>
-              )}
+              }
               {this.state.token ? (
                 <div
                   onClick={() => {
@@ -184,6 +184,6 @@ query me {
   }
 }`
 
-export default graphql(ME,{})(SuperContainer)
+export default SuperContainer
 
 
